@@ -7,7 +7,17 @@
       </div>
       <div v-else>
         <div v-if="result?.me">
-          <h1 class="mb-4">{{ userName }}'s Todos</h1>
+          <div class="mb-4">
+            <h1>{{ userName }}'s Todos</h1>
+            <div>
+              <span class="text-blue-grey-lighten-2">
+                <span v-if="tasksCount"
+                  >{{ completedTasksCount }}/{{ tasksCount }} tasks completed</span
+                >
+                <span v-else>No tasks</span>
+              </span>
+            </div>
+          </div>
           <TodoItems @update="resync" :items="result.me.tasks" />
         </div>
         <div v-else>
@@ -51,6 +61,12 @@ onMounted(() => {
 const { result, loading, error, refetch } = useQuery(meQuery);
 const userName = computed(() => result?.value?.me?.name);
 const errorMessage = computed(() => error.value?.graphQLErrors?.map((e) => e.message).join(", "));
+
+const tasksCount = computed(() => result?.value?.me?.tasks.length);
+const completedTasksCount = computed(
+  () =>
+    result?.value?.me?.tasks.filter(({ status }: { status: string }) => status === "done").length
+);
 
 const resync = async () => {
   await refetch();
