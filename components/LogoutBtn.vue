@@ -1,5 +1,5 @@
 <template>
-  <VBtn :disabled="loading" aria-label="Logout" variant="flat" color="red" @click="logout" block>
+  <VBtn :disabled="loading" aria-label="Logout" variant="text" color="red" @click="logout" block>
     Logout
   </VBtn>
 </template>
