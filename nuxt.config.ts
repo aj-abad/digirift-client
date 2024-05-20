@@ -27,6 +27,7 @@ export default defineNuxtConfig({
   apollo: {
     clients: {
       default: {
+        tokenStorage: "localStorage",
         httpEndpoint: process.env.APOLLO_HTTP_ENDPOINT || "http://localhost:8000/graphql",
       },
     },
