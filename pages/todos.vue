@@ -1,7 +1,7 @@
 <template>
   <div
     class="d-flex align-center justify-center bg-blue-grey-lighten-5 h-100 w-100 overflow-hidden">
-    <VSheet class="pa-4 bg-white rounded-lg border" id="todos-sheet">
+    <VSheet class="pa-4 bg-white rounded-lg border d-flex flex-column ga-4" id="todos-sheet">
       <div class="d-flex justify-center" v-if="loading">
         <VProgressCircular indeterminate color="teal-darken-4" />
       </div>
@@ -16,7 +16,10 @@
           </VAlert>
         </div>
       </div>
-      <div class="mt-4">
+      <div>
+        <AddTodo @add="resync" />
+      </div>
+      <div>
         <LogoutBtn />
       </div>
     </VSheet>
