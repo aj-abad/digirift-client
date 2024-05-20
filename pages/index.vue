@@ -31,8 +31,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { VAlert } from "vuetify/components";
+
+onMounted(() => {
+  if (localStorage.getItem("token")) {
+    useRouter().replace("/todos");
+  }
+});
 
 const email = ref("");
 const password = ref("");
@@ -44,7 +50,16 @@ const query = gql`
     }
   }
 `;
-const { mutate: login, error, loading } = useMutation(query);
+
+const { mutate: login, onDone, error, loading } = useMutation(query);
+
+onDone((data) => {
+  const { token } = data?.data?.login || {};
+  if (!token) return;
+  localStorage.setItem("token", token);
+  useRouter().replace("/todos");
+});
+
 const errorMessage = computed(() => error.value?.graphQLErrors?.map((e) => e.message).join(", "));
 </script>
 
