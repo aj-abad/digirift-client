@@ -1,5 +1,5 @@
 <template>
-  <VBtn aria-label="Logout" variant="flat" color="red" @click="logoutFireAndForget" block>
+  <VBtn :disabled="loading" aria-label="Logout" variant="flat" color="red" @click="logout" block>
     Logout
   </VBtn>
 </template>
@@ -12,11 +12,12 @@ const logoutMutation = gql`
     }
   }
 `;
-const { mutate: logout } = useMutation(logoutMutation);
+const { mutate: logout, onDone, loading } = useMutation(logoutMutation);
 
-const logoutFireAndForget = async () => {
-  logout(); // fire and forget so we can sign out offline
+onDone((_, context) => {
+  context.client.clearStore();
   localStorage.removeItem("token");
+  localStorage.removeItem("todos");
   useRouter().replace("/");
-};
+});
 </script>
