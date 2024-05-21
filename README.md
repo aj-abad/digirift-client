@@ -6,6 +6,12 @@
 2. Run the server with `composer install` and `php artisan serve`
 3. Seed the database with `php artisan migrate:fresh --seed`
 4. Run the client with `yarn install` and `yarn dev`
+5. Sign into either of the two test accounts:
+  tim@example.com
+  tim123
+  scott@example.com
+  scott123
+ 
 
 ## Description and and approach
 
